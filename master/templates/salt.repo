@@ -1,0 +1,8 @@
+[salt-{{ grains['salt_major_version'] }}-repo]
+name=Salt repo for RHEL/CentOS 8 PY3
+baseurl=https://repo.saltproject.io/py3/redhat/{{ grains['osmajorrelease'] }}/x86_64/{{ grains['salt_major_version'] }}
+skip_if_unavailable=True
+enabled=1
+enabled_metadata=1
+gpgcheck=1
+gpgkey=https://repo.saltproject.io/py3/redhat/{{ grains['osmajorrelease'] }}/x86_64/{{ grains['salt_major_version'] }}/SALTSTACK-GPG-KEY.pub

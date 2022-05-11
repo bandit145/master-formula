@@ -1,0 +1,20 @@
+
+provider: docker
+formula: master-formula
+scenario: default
+verifier: testinfra
+
+grains:
+  box1:
+    salt_major_version: 3004
+
+instances:
+  - name: box1
+    image: quay.io/centos/centos:stream8
+    customize: true
+    tmpfs:
+      '/run': ''
+      '/tmp': ''
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
