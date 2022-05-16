@@ -1,0 +1,7 @@
+from salt.utils.yamldumper import safe_dump
+
+def run():
+	if 'salt_master_top_config' in pillar.keys():
+		return safe_dump(pillar['salt_master_top_config'])
+	else:
+		return ''

@@ -1,3 +1,0 @@
-{% if 'salt_master_config' in pillar.keys() %}
-{{ pillar['salt_master_config'] | yaml_encode }}
-{% endif %}
