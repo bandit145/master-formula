@@ -31,7 +31,7 @@ install_required_pkgs:
 gunicorn:
   cmd.run:
     - name: systemctl daemon-reload
-    - watch:
+    - onchanges:
       - file: /usr/lib/systemd/system/gunicorn.service
   service.running:
     - enable: true
@@ -40,9 +40,14 @@ nginx:
   service.running:
     - enable: true
     - full_restart: true
-    - watch:
-      - file: /etc/pki/salt_api.crt
-      - file: /etc/pki/salt_api.key
+    - onchanges_any:
+      - x509: /etc/pki/salt_api.key
+      - x509: /etc/pki/salt_api.crt
       - file: /etc/nginx/nginx.conf
+
+nginx_ensure_running:
+  service.running:
+    - name: nginx
+    - enable: true
 
 {%endif%}

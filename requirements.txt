@@ -1,0 +1,3 @@
+salt-lint
+requests
+pytest-testinfra

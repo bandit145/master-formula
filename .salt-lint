@@ -2,3 +2,4 @@
 exclude_paths:
   - nacl/
   - LICENSE
+  - requirements.txt
