@@ -1,12 +1,5 @@
-# /etc/yum.repos.d/salt.repo:
-#   file.managed:
-#     - source: salt://master/templates/salt.repo
-#     - template: jinja
+
 salt_repo:
-  # cmd.run:
-  #   - name: rpm --import https://repo.saltproject.io/py3/redhat/{{ grains['osmajorrelease'] }}/x86_64/{{ grains['salt_major_version'] }}/SALTSTACK-GPG-KEY.pub
-  #   - creates:
-  #       - /etc/pki/SALTSTACK-GPG-KEY.pub
   pkgrepo.managed:
     - name: salt
     - baseurl: https://repo.saltproject.io/py3/redhat/{{ grains['osmajorrelease'] }}/x86_64/{{ pillar['salt_major_version'] }}
@@ -22,6 +15,7 @@ install_and_configure_salt:
         - salt-api
         - salt-minion
         - python3-pygit2
+        - python3-gnupg
 
   file.managed:
     - name: /etc/salt/master
@@ -34,6 +28,25 @@ install_and_configure_salt:
     - full_restart: true
     - onchanges:
       - file: /etc/salt/master
+
+/etc/salt/gpgkeys:
+  file.directory:
+    - mode: 0600
+
+#create gpg key for crypto
+
+gpg.create_key:
+  module.run:
+    #- gpg.create_key:
+    - key_length: 4096
+    - key_type: RSA
+    - user: salt
+    - creates: /etc/salt/gpgkeys/pubring.kbx
+
+GNUPGHOME=/etc/salt/gpgkeys gpg2 --export --armor > /etc/salt/gpg.pub:
+  cmd.run:
+    - creates: /etc/salt/gpg.pub
+
 
 configure_salt_top_file:
   file.managed:
