@@ -50,4 +50,4 @@ nginx_ensure_running:
     - name: nginx
     - enable: true
 
-{%endif%}
+{% endif %}

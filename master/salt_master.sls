@@ -39,7 +39,7 @@ restart_if_requried:
 
 /etc/salt/gpgkeys:
   file.directory:
-    - mode: 0600
+    - mode: "0600"
 
 #create gpg key for crypto
 

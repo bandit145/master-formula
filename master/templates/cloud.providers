@@ -1,0 +1,7 @@
+from salt.utils.yamldumper import safe_dump
+
+def run():
+	if 'salt_cloud_providers' in pillar.keys():
+		return safe_dump(pillar['salt_cloud_providers'])
+	else:
+		return ''
